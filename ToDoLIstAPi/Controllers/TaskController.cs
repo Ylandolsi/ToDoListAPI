@@ -28,6 +28,12 @@ public class TaskController : ControllerBase
         var taskResponse = await _taskService.GetTaskAsync(id);
         return Ok(taskResponse);
     }
+    [HttpGet("collection")]
+    public async Task<IActionResult> GetTasks()
+    {
+        var tasks = await _taskService.GetAllTaskAsync();
+        return Ok(tasks);
+    }
 
     [HttpPost]
     public async Task<IActionResult> CreateTaskbyId([FromBody] Tasks inputTask)

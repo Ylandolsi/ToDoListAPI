@@ -32,10 +32,10 @@ public class TaskService : ITaskService
         return task;
     }
 
-    public async Task<List<Tasks>> GetAllTaskAsync()
+    public async Task<IEnumerable<Tasks>> GetAllTaskAsync()
     {
         _logger.LogInformation("Getting all tasks");
-        return  await _context.Set<Tasks>().ToListAsync();
+        return  await _context.Set<Tasks>().Include(t => t.User).ToListAsync();
          
     }
 

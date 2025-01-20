@@ -1,12 +1,22 @@
+using Microsoft.AspNetCore.Mvc;
 using ToDoLIstAPi.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 ServiceConfiguartion.ConfigureALl(builder);
+builder.Services.AddAutoMapper(typeof(Program));
+// to enable custoum response from action
+// exp : return BadRequest("some message")
+// cuz [apiController] return a default response ( 400 - badRequest ) 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 var app = builder.Build();
 app.UseExceptionHandler(); 
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

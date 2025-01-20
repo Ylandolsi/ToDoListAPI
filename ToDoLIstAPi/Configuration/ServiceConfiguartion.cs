@@ -27,8 +27,12 @@ public static class ServiceConfiguartion
         });
     }
 
-    public static void ConfigureUserService(this IServiceCollection services) =>
+    public static void ConfigureTaskService(this IServiceCollection services) =>
         services.AddScoped<ITaskService, TaskService>();
+    
+    public static void ConfigureUserService(this IServiceCollection services) =>
+        services.AddScoped<IUserService, UserService>();
+    
 
     public static void ConfigureALl(this WebApplicationBuilder builder)
     {
@@ -38,7 +42,9 @@ public static class ServiceConfiguartion
             {
                 // (problem : circular references when serializing the data ) 
                 // Task have User and user Have task so we need to ignore the cycle
-                // to avoid infinite loop ! 
+                // to avoid infinite loop !  ( replace the cycle with null and print the others ) 
+                
+                // or we can just use [JsonIgnore] on the navigation property ORRR Dto for repsponse
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
             });
 
@@ -48,7 +54,9 @@ public static class ServiceConfiguartion
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
         );
         builder.Services.ConfigureSwagger();
+        builder.Services.ConfigureTaskService();
         builder.Services.ConfigureUserService();
+
         
         builder.Services.AddExceptionHandler<BadRequestExceptionHandler>();
         builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
