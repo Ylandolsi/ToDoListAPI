@@ -1,7 +1,9 @@
 using Contracts;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Models.Exceptions;
+using ToDoLIstAPi.Authentication;
 using ToDoLIstAPi.DbContext;
 using ToDoLIstAPi.ExceptionHandler;
 using ToDoLIstAPi.Services;
@@ -36,7 +38,13 @@ public static class ServiceConfiguartion
 
     public static void ConfigureALl(this WebApplicationBuilder builder)
     {
+        builder.Services.AddAuthentication("BasicAuthentication")
+            .AddScheme<AuthenticationSchemeOptions, BasicAuthHandler>("BasicAuthentication", null);l);
 
+        // Enable authorization
+        builder.Services.AddAuthorization();
+        
+        
         builder.Services.AddControllers()
             .AddJsonOptions(options =>
             {
