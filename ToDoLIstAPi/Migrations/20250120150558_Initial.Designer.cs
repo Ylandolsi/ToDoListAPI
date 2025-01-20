@@ -12,8 +12,8 @@ using ToDoLIstAPi.DbContext;
 namespace ToDoLIstAPi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250120113232_fill_With_someData")]
-    partial class fill_With_someData
+    [Migration("20250120150558_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

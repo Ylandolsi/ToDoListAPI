@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 ServiceConfiguartion.ConfigureALl(builder);
 
 var app = builder.Build();
+app.UseExceptionHandler(); 
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

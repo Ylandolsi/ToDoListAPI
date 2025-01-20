@@ -5,7 +5,7 @@ namespace Models.Entities;
 
 public class Tasks
 {
-    [Key]
+    [Key ]
     public int Id { get; set; }
     [Required(ErrorMessage = "Title Required")]
     public string Title { get; set; }
@@ -15,8 +15,9 @@ public class Tasks
     
     public bool IsCompleted { get; set; }
     public int UserId { get; set; }
-    [ForeignKey("UserId")]
-    public User User { get; set; }
+    
+    [ForeignKey(nameof(UserId) ) ]
+    public User? User { get; set; }
     
     
 }

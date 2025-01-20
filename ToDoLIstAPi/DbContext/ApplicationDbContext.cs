@@ -12,10 +12,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         modelBuilder.ApplyConfiguration(new UserConfiguration()); 
         modelBuilder.ApplyConfiguration(new TasksConfiguration()); 
-    
     }
-
-
     DbSet<User>? Users { get; set; }
     DbSet<Tasks>? Tasks { get; set; }
 }
