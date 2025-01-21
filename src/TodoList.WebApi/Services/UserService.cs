@@ -103,9 +103,7 @@ public class UserService : IUserService
             throw new BadRequestException("Id is invalid");
         }
 
-        var task = _mapper.Map<Tasks>(taskDto);
-        task.UserId = userId;
-        await _taskService.CreateTaskAsync(task);
+        await _taskService.CreateTaskAsync(userId , taskDto);
         await _context.SaveChangesAsync();
         _logger.LogInformation("Task added to user with Success");
     }

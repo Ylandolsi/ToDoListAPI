@@ -1,8 +1,10 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 using Models.Exceptions;
 using ToDoLIstAPi.Contracts;
 using ToDoLIstAPi.DbContext;
+using ToDoLIstAPi.DTO.Tasks;
 
 namespace ToDoLIstAPi.Services;
 
@@ -10,11 +12,13 @@ public class TaskService : ITaskService
 {
     private readonly ApplicationDbContext _context;
     private readonly ILogger<TaskService> _logger;
+    private readonly IMapper _mapper;
 
-    public TaskService(ApplicationDbContext context, ILogger<TaskService> logger)
+    public TaskService(ApplicationDbContext context, ILogger<TaskService> logger , IMapper mapper)
     {
         _logger = logger;
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<Tasks> GetTaskAsync(int id)
@@ -39,10 +43,14 @@ public class TaskService : ITaskService
          
     }
 
-    public async Task CreateTaskAsync(Tasks task)
+    public async Task CreateTaskAsync(int idUser , TaskAddForUserDto task)
     {
+        _logger.LogInformation("Mapping task");
+        var taskMapped = _mapper.Map<Tasks>(task); 
+        taskMapped.UserId = idUser;
+        
         _logger.LogInformation("Creating task");
-        await _context.Set<Tasks>().AddAsync(task);
+        await _context.Set<Tasks>().AddAsync(taskMapped);
         await _context.SaveChangesAsync();
         _logger.LogInformation("Task created with Success");
     }

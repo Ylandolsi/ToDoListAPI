@@ -64,6 +64,7 @@ public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOption
         // ( name , role , email , phone number , address , ... )
         var claims = new[]
         {
+            new Claim(ClaimTypes.NameIdentifier, userEntity.Id.ToString()), // Include the user's ID
             new Claim(ClaimTypes.Name, username),
             new Claim(ClaimTypes.Role, role) // Add the user's role as a claim ( role-based authorization )
         };

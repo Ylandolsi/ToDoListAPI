@@ -1,6 +1,10 @@
+using System.Security.Claims;
+using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Entities;
 using ToDoLIstAPi.Contracts;
+using ToDoLIstAPi.DTO.Tasks;
 
 namespace ToDoLIstAPi.Controllers;
 
@@ -16,6 +20,8 @@ public class TaskController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Admin")]
+
     public async Task<IActionResult> GetTaskbyId(int id)
     {
         if (id <= 0)
@@ -26,6 +32,7 @@ public class TaskController : ControllerBase
         var taskResponse = await _taskService.GetTaskAsync(id);
         return Ok(taskResponse);
     }
+    [Authorize(Roles = "Admin")]
     [HttpGet("collection")]
     public async Task<IActionResult> GetTasks()
     {
@@ -33,14 +40,18 @@ public class TaskController : ControllerBase
         return Ok(tasks);
     }
 
+    [Authorize]
     [HttpPost]
-    public async Task<IActionResult> CreateTaskbyId([FromBody] Tasks inputTask)
+    public async Task<IActionResult> CreateTaskbyId([FromBody] TaskAddForUserDto inputTask)
     {
         if (!ModelState.IsValid)
         {
             return UnprocessableEntity("Invalid input");
         }
-        await _taskService.CreateTaskAsync(inputTask);
+        var userId = HttpContext.User.Claims.FirstOrDefault( u => u.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
+        if (userId is null)
+            return BadRequest("User dosent Have an Id"); 
+        await _taskService.CreateTaskAsync(int.Parse(userId), inputTask);
         return NoContent();
     }
     [HttpPut]
