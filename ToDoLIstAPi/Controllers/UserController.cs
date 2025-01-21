@@ -1,7 +1,7 @@
 using System.Security.Claims;
-using Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ToDoLIstAPi.Contracts;
 using ToDoLIstAPi.DTO.Tasks;
 using ToDoLIstAPi.DTO.User;
 

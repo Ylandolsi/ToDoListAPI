@@ -2,7 +2,7 @@ using Models.Entities;
 using ToDoLIstAPi.DTO.Tasks;
 using ToDoLIstAPi.DTO.User;
 
-namespace Contracts;
+namespace ToDoLIstAPi.Contracts;
 
 public interface IUserService
 {

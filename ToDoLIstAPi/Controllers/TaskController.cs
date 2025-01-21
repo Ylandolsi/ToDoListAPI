@@ -1,8 +1,6 @@
-using Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.Framework;
-using Microsoft.EntityFrameworkCore;
 using Models.Entities;
+using ToDoLIstAPi.Contracts;
 
 namespace ToDoLIstAPi.Controllers;
 

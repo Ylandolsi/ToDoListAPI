@@ -3,17 +3,18 @@ using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
+using ToDoLIstAPi.Contracts;
 
 namespace ToDoLIstAPi.Authentication;
 
 public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
-    private readonly IAuthenticationService _authenticationService;
+    private readonly IAuthService _authenticationService;
     public BasicAuthHandler(
         IOptionsMonitor<AuthenticationSchemeOptions> options,
         ILoggerFactory logger,
         UrlEncoder encoder,
-        ISystemClock clock , IAuthenticationService authenticationService) 
+        ISystemClock clock , IAuthService authenticationService) 
         : base(options, logger, encoder, clock)
     {
         _authenticationService = authenticationService;
@@ -75,6 +76,7 @@ public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOption
 
         return AuthenticateResult.Success(new AuthenticationTicket(claimsPrincipal, Scheme.Name));
     }
+    // HandleChallengeAsync is called when auth is failed 
     protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
     {
         Response.StatusCode = StatusCodes.Status401Unauthorized;

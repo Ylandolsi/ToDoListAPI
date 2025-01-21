@@ -1,8 +1,9 @@
 using Models.Entities;
 
-namespace ToDoLIstAPi;
+namespace ToDoLIstAPi.Contracts;
 
-public interface IAuthenticationService
+public interface IAuthService
+
 {
         Task<User> Authenticate(string username, string password);
         bool VerifyPasswordHash(string password, string storedHash); 

@@ -1,6 +1,6 @@
 using Models.Entities;
 
-namespace Contracts;
+namespace ToDoLIstAPi.Contracts;
 
 public interface ITaskService
 {

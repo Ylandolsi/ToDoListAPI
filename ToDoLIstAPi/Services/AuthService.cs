@@ -1,14 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
+using ToDoLIstAPi.Contracts;
 using ToDoLIstAPi.DbContext;
 
-namespace ToDoLIstAPi;
+namespace ToDoLIstAPi.Services;
 
-public class AuthenticationService : IAuthenticationService
+public class AuthService : IAuthService
 {
     private readonly ApplicationDbContext _context;
 
-    public AuthenticationService(ApplicationDbContext context)
+    public AuthService(ApplicationDbContext context)
     {
         _context = context;
     }
