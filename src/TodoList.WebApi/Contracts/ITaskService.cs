@@ -7,7 +7,7 @@ public interface ITaskService
 {
     Task<IEnumerable<Tasks>> GetAllTaskAsync();
     Task<Tasks> GetTaskAsync(int id);
-    Task CreateTaskAsync(int idUser, TaskAddForUserDto task); 
+    Task CreateTaskAsync( TaskAddForUserDto task); 
 
     Task  UpdateTaskAsync(Tasks task);
     Task  DeleteTaskAsync(int id);

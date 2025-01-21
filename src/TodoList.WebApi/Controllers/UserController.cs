@@ -35,6 +35,7 @@ public class UserController: ControllerBase
         var user = await _userService.GetUserAsync(id);
         return Ok(user);
     }
+    [Authorize]
     [HttpGet("{id}/tasks")]
     public async Task<IActionResult> GetTasksOfUser(int id)
     {

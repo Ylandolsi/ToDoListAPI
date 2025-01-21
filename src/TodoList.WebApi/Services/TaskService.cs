@@ -43,11 +43,10 @@ public class TaskService : ITaskService
          
     }
 
-    public async Task CreateTaskAsync(int idUser , TaskAddForUserDto task)
+    public async Task CreateTaskAsync( TaskAddForUserDto task)
     {
         _logger.LogInformation("Mapping task");
         var taskMapped = _mapper.Map<Tasks>(task); 
-        taskMapped.UserId = idUser;
         
         _logger.LogInformation("Creating task");
         await _context.Set<Tasks>().AddAsync(taskMapped);

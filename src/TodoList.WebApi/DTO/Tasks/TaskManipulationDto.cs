@@ -9,4 +9,7 @@ public record TaskManipulationDto
     public string Description { get; set; }
     [Required(ErrorMessage = "Due Date Required")]
     public DateTime DueDate { get; set; }
+
+    public bool IsCompleted { get; set; } = false; 
+    public int? UserId { get; set; }
 }

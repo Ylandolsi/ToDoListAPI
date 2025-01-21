@@ -103,7 +103,8 @@ public class UserService : IUserService
             throw new BadRequestException("Id is invalid");
         }
 
-        await _taskService.CreateTaskAsync(userId , taskDto);
+        taskDto.UserId = userId;  
+        await _taskService.CreateTaskAsync(taskDto);
         await _context.SaveChangesAsync();
         _logger.LogInformation("Task added to user with Success");
     }
