@@ -4,3 +4,18 @@ GET {{ToDoLIstAPi_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+###&
+POST {{ToDoLIstAPi_HostAddress}}/api/user
+Content-Type: application/json
+#Basic dGVzdDoxMjM=
+{
+    "Name" : "testpost" , 
+    "position" : "leader" , 
+    "Username" :"test" , 
+    "Password" :"123" , 
+    "Role" : "sidek", 
+    "Tasks" : []
+}
+
+#med:med Basic bWVkOm1lZA==
+

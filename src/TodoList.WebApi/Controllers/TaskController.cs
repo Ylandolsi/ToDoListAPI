@@ -22,6 +22,21 @@ public class TaskController : ControllerBase
         _taskService = taskService;
     }
 
+
+    private IActionResult AuthorizeUser(Tasks task ) 
+    {
+        var userId = HttpContext.User.Claims.FirstOrDefault( u => u.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
+        if (userId is null)
+            return BadRequest("User dosent Have an Id");
+        var role = HttpContext.User.Claims.FirstOrDefault(u => u.Type.Equals(ClaimTypes.Role))?.Value;
+        if ( role != "Admin" && task.UserId != int.Parse(userId))
+        {
+            return Unauthorized("You are not allowed to Modify this task");
+        }
+
+        return null; 
+    }
+
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
 
@@ -64,7 +79,7 @@ public class TaskController : ControllerBase
     }
     
     [Authorize(Roles = "Admin")]
-    [HttpPost]
+    [HttpPost("admin")]
     // admin create a task for a user
     public async Task<IActionResult> CreateTaskByAdmin([FromBody] TaskAddForUserDto inputTask)
     {
@@ -91,15 +106,11 @@ public class TaskController : ControllerBase
         }
         _logger.LogInformation("Checking if user is allowed to update the task");
 
-        var userId = HttpContext.User.Claims.FirstOrDefault( u => u.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
-        if (userId is null)
-            return BadRequest("User dosent Have an Id");
-        var role = HttpContext.User.Claims.FirstOrDefault(u => u.Type.Equals(ClaimTypes.Role))?.Value;
-        if ( role != "Admin" && inputTask.UserId != int.Parse(userId))
+        var authResult = AuthorizeUser(inputTask);
+        if ( authResult is not null)
         {
-            return Unauthorized("You are not allowed to update this task");
+            return authResult;
         }
-
         await _taskService.UpdateTaskAsync(inputTask);
         return NoContent();
     }
@@ -118,13 +129,10 @@ public class TaskController : ControllerBase
         {
             return BadRequest("Task not found");
         }
-        var userId = HttpContext.User.Claims.FirstOrDefault( u => u.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
-        if (userId is null)
-            return BadRequest("User dosent Have an Id");
-        var role = HttpContext.User.Claims.FirstOrDefault(u => u.Type.Equals(ClaimTypes.Role))?.Value;
-        if ( role != "Admin" && task.UserId != int.Parse(userId))
+        var authResult = AuthorizeUser(task);
+        if ( authResult is not null)
         {
-            return Unauthorized("You are not allowed to delete this task");
+            return authResult;
         }
         await _taskService.DeleteTaskAsync(id);
         return NoContent();
@@ -144,13 +152,11 @@ public class TaskController : ControllerBase
         {
             return BadRequest("Task not found");
         }
-        var userId = HttpContext.User.Claims.FirstOrDefault( u => u.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
-        if (userId is null)
-            return BadRequest("User dosent Have an Id");
-        var role = HttpContext.User.Claims.FirstOrDefault(u => u.Type.Equals(ClaimTypes.Role))?.Value;
-        if ( role != "Admin" && task.UserId != int.Parse(userId))
+    
+        var authResult = AuthorizeUser(task);
+        if ( authResult is not null)
         {
-            return Unauthorized("You are not allowed to finish this task");
+            return authResult;
         }
         await _taskService.FinishTaskAsync(id);
         return NoContent();
