@@ -25,7 +25,7 @@ namespace ToDoLIstAPi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Models.Entities.Tasks", b =>
+            modelBuilder.Entity("TodoList.Models.Entities.Tasks", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -140,7 +140,7 @@ namespace ToDoLIstAPi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Models.Entities.User", b =>
+            modelBuilder.Entity("TodoList.Models.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -203,9 +203,9 @@ namespace ToDoLIstAPi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Models.Entities.Tasks", b =>
+            modelBuilder.Entity("TodoList.Models.Entities.Tasks", b =>
                 {
-                    b.HasOne("Models.Entities.User", "User")
+                    b.HasOne("TodoList.Models.Entities.User", "User")
                         .WithMany("Tasks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -214,7 +214,7 @@ namespace ToDoLIstAPi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Models.Entities.User", b =>
+            modelBuilder.Entity("TodoList.Models.Entities.User", b =>
                 {
                     b.Navigation("Tasks");
                 });

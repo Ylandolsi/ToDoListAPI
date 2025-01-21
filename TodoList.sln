@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoLIstAPi", "ToDoLIstAPi\ToDoLIstAPi.csproj", "{004C5AD3-B69D-44FA-BB18-C18CDA8C481A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.WebApi", "TodoList.WebApi\TodoList.WebApi.csproj", "{004C5AD3-B69D-44FA-BB18-C18CDA8C481A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{6024A60E-3216-48F4-B374-07D3DA10E226}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.Models", "TodoList.Models\TodoList.Models.csproj", "{6024A60E-3216-48F4-B374-07D3DA10E226}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
