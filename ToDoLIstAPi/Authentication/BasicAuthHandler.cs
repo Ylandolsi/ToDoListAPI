@@ -23,7 +23,7 @@ public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOption
     {
         if (!Request.Headers.ContainsKey("Authorization"))
         {
-            return AuthenticateResult.Fail("Unauthorized");
+            return AuthenticateResult.Fail("Unauthorized , Authorization header is missing");
         }
 
         string authorizationHeader = Request.Headers["Authorization"];
@@ -45,7 +45,7 @@ public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOption
         var credentials = credentialAsString.Split(":");
         if (credentials?.Length != 2)
         {
-            return AuthenticateResult.Fail("Unauthorized");
+            return AuthenticateResult.Fail("Unauthorized , Review Your Credentials");
         }
 
         var username = credentials[0];
@@ -55,7 +55,7 @@ public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOption
 
         if ( userEntity is null ) 
         {
-            return AuthenticateResult.Fail("Authentication failed");
+            return AuthenticateResult.Fail("Authentication failed ( username or password is incorrect )");
         }
 
         var role = userEntity.Role; 
@@ -74,5 +74,22 @@ public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOption
         var claimsPrincipal = new ClaimsPrincipal(identity);
 
         return AuthenticateResult.Success(new AuthenticationTicket(claimsPrincipal, Scheme.Name));
+    }
+    protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
+    {
+        Response.StatusCode = StatusCodes.Status401Unauthorized;
+        Response.ContentType = "application/json";
+
+        // Get the failure message from the authentication result
+        var authenticateResult = await HandleAuthenticateOnceAsync();
+        var failureMessage = authenticateResult?.Failure?.Message ?? "Unauthorized";
+
+        var response = new
+        {
+            status = StatusCodes.Status401Unauthorized,
+            message = failureMessage
+        };
+
+        await Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(response));
     }
 }
