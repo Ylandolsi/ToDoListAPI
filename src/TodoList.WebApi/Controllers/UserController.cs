@@ -19,7 +19,8 @@ public class UserController : ControllerBase
         _userService = userService;
         _logger = logger;
     }
-
+    
+    // admin and user himself 
     private IActionResult AuthorizeUser(int resourceId)
     {
         var userId = HttpContext.User.Claims.FirstOrDefault(u => u.Type.Equals(ClaimTypes.NameIdentifier))?.Value;

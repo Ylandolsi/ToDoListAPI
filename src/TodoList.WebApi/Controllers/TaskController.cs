@@ -22,7 +22,7 @@ public class TaskController : ControllerBase
         _taskService = taskService;
     }
 
-
+    // admin and user who is assigned to the task can access the task
     private IActionResult AuthorizeUser(Tasks task ) 
     {
         var userId = HttpContext.User.Claims.FirstOrDefault( u => u.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
