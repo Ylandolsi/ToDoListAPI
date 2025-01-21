@@ -1,7 +1,7 @@
+using System.Security.Claims;
 using Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Models.Entities;
 using ToDoLIstAPi.DTO.Tasks;
 using ToDoLIstAPi.DTO.User;
 
@@ -12,14 +12,19 @@ namespace ToDoLIstAPi.Controllers;
 public class UserController: ControllerBase
 {
     private readonly IUserService _userService;
-    public UserController(IUserService userService)
+    private readonly ILogger<UserController> _logger;
+    public UserController(IUserService userService , ILogger<UserController> logger)
     {
         _userService = userService;
+        _logger = logger;
     }
+
     [Authorize(Roles = "Admin")]
     [HttpGet("collection")]
     public async Task<IActionResult> GetUsers()
     {
+        var userNameOfUserWhoSentRequest = HttpContext.User.Claims.FirstOrDefault(u => u.Type.Equals( ClaimTypes.Name ) )?.Value;
+        _logger.LogInformation($"User {userNameOfUserWhoSentRequest} is requesting all users");
         var users = await _userService.GetAllUsersAsync();
         return Ok(users);
     }
