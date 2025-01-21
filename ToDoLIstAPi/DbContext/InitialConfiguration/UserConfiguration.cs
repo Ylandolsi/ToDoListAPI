@@ -13,68 +13,30 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             {
                 Id = 1,
                 Name = "Yassine",
-                position = "Software Developer"
+                position = "Software Developer",
+                Username = "yassine",
+                PasswordHash = "$2a$11$143FvUPdT95WWhJS3gP2JuDpj3zyezQC5Q8104ioM1YBKOH2UR3qi" ,
+                Role = "Admin"
             },
             new User
             {
                 Id = 2,
                 Name = "Fatima",
-                position = "Project Manager"
+                position = "Project Manager",
+                Username = "fatima",
+                PasswordHash = "$2a$11$BN6yt1TSvhtJUyrA3ezN6OhJIS7O3pTv3H0TVxTtglyURJBCjI3z2" , 
+                Role = "Admin"
             },
             new User
             {
                 Id = 3,
                 Name = "Ahmed",
-                position = "Data Scientist"
-            },
-            new User
-            {
-                Id = 4,
-                Name = "Sara",
-                position = "UI/UX Designer"
-            },
-            new User
-            {
-                Id = 5,
-                Name = "Ali",
-                position = "DevOps Engineer"
-            },
-            new User
-            {
-                Id = 6,
-                Name = "Noor",
-                position = "QA Engineer"
-            },
-            new User
-            {
-                Id = 7,
-                Name = "Hassan",
-                position = "Mobile Developer"
-            },
-            new User
-            {
-                Id = 8,
-                Name = "Mounia",
-                position = "Business Analyst"
-            },
-            new User
-            {
-                Id = 9,
-                Name = "Ibrahim",
-                position = "Backend Developer"
-            },
-            new User
-            {
-                Id = 10,
-                Name = "Amina",
-                position = "Frontend Developer"
-            },
-            new User
-            {
-                Id = 11,
-                Name = "Khalid",
-                position = "Database Administrator"
+                position = "Data Scientist",
+                Username = "ahmed",
+                PasswordHash = "$2a$11$UiFQw1BdHwK1C13FyCc4G.ZzZZEToQbWOr12CGkyonsL11DTwnE8S" , 
+                Role = "employee"
             }
+
         );
     }
 }

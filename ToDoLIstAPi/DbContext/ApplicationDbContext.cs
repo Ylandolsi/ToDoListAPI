@@ -6,13 +6,15 @@ namespace ToDoLIstAPi.DbContext;
 
 using Microsoft.EntityFrameworkCore;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : DbContext(options)
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new UserConfiguration()); 
-        modelBuilder.ApplyConfiguration(new TasksConfiguration()); 
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new TasksConfiguration());
     }
+
     DbSet<User>? Users { get; set; }
     DbSet<Tasks>? Tasks { get; set; }
 }

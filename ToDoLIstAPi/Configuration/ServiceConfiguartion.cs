@@ -23,10 +23,36 @@ public static class ServiceConfiguartion
 
     public static void ConfigureSwagger(this IServiceCollection services)
     {
-        services.AddSwaggerGen(s =>
+ 
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen(c =>
         {
-            s.SwaggerDoc("v1", new OpenApiInfo { Title = "toDoList api ", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "toDoList api ", Version = "v1" });
+            c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                Scheme = "basic",
+                In = ParameterLocation.Header,
+                Description = "Basic Authorization header."
+            });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "basic"
+                        }
+                    },
+                    new string[] {}
+                }
+            });
         });
+
     }
 
     public static void ConfigureTaskService(this IServiceCollection services) =>
@@ -35,14 +61,13 @@ public static class ServiceConfiguartion
     public static void ConfigureUserService(this IServiceCollection services) =>
         services.AddScoped<IUserService, UserService>();
     
+    public static void ConfigureAuthService (this IServiceCollection services) =>
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
+    
 
     public static void ConfigureALl(this WebApplicationBuilder builder)
     {
-        builder.Services.AddAuthentication("BasicAuthentication")
-            .AddScheme<AuthenticationSchemeOptions, BasicAuthHandler>("BasicAuthentication", null);l);
 
-        // Enable authorization
-        builder.Services.AddAuthorization();
         
         
         builder.Services.AddControllers()
@@ -56,6 +81,8 @@ public static class ServiceConfiguartion
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
             });
 
+        
+        
         builder.Services.AddOpenApi();
         builder.Services.ConfigureCors();
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -64,13 +91,19 @@ public static class ServiceConfiguartion
         builder.Services.ConfigureSwagger();
         builder.Services.ConfigureTaskService();
         builder.Services.ConfigureUserService();
+        builder.Services.ConfigureAuthService();
+        
 
         
         builder.Services.AddExceptionHandler<BadRequestExceptionHandler>();
         builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
         builder.Services.AddExceptionHandler<DbUpdateExceptionHandler>();
         builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+        builder.Services.AddAuthentication("BasicAuthentication")
+            .AddScheme<AuthenticationSchemeOptions, BasicAuthHandler>("BasicAuthentication", null);
 
+        // Enable authorization
+        builder.Services.AddAuthorization();
         builder.Services.AddProblemDetails(); 
 
 

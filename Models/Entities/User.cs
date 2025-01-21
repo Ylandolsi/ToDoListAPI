@@ -12,6 +12,12 @@ public class User
     [Required(ErrorMessage = "Position Required")]
     public string position { get; set; }
     
+    public string Username { get; set; }
+    public string PasswordHash { get; set; } // Store hashed passwords, not plain text
+    public string Role { get; set; } // e.g., "Admin", "User"
+    
     // tasks done ? 
     public ICollection<Tasks> Tasks { get; set; }
+    
+
 }

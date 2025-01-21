@@ -8,13 +8,15 @@ namespace ToDoLIstAPi.Authentication;
 
 public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
+    private readonly IAuthenticationService _authenticationService;
     public BasicAuthHandler(
         IOptionsMonitor<AuthenticationSchemeOptions> options,
         ILoggerFactory logger,
         UrlEncoder encoder,
-        ISystemClock clock)
+        ISystemClock clock , IAuthenticationService authenticationService) 
         : base(options, logger, encoder, clock)
     {
+        _authenticationService = authenticationService;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -49,12 +51,14 @@ public class BasicAuthHandler : AuthenticationHandler<AuthenticationSchemeOption
         var username = credentials[0];
         var password = credentials[1];
 
-        if (!UserValidate.Login(username, password))
+        var userEntity = await _authenticationService.Authenticate(username, password); 
+
+        if ( userEntity is null ) 
         {
             return AuthenticateResult.Fail("Authentication failed");
         }
 
-        var role = UserValidate.GetRole(username);
+        var role = userEntity.Role; 
         // claim is key value pair : represent information about the authenticated user 
         // ( name , role , email , phone number , address , ... )
         var claims = new[]

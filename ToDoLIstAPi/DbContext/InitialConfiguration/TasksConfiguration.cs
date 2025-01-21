@@ -16,7 +16,7 @@ public class TasksConfiguration : IEntityTypeConfiguration<Tasks>
                 Description = "Write the project documentation for the new API.",
                 DueDate = new DateTime(2025, 1, 25),
                 IsCompleted = false,
-                UserId = 1 // Reference to User with Id = 1
+                UserId = 1 
             },
             new Tasks
             {
@@ -25,7 +25,7 @@ public class TasksConfiguration : IEntityTypeConfiguration<Tasks>
                 Description = "Develop the user authentication feature for the app.",
                 DueDate = new DateTime(2025, 1, 30),
                 IsCompleted = false,
-                UserId = 2 // Reference to User with Id = 2
+                UserId = 2 
             },
             new Tasks
             {
@@ -34,7 +34,7 @@ public class TasksConfiguration : IEntityTypeConfiguration<Tasks>
                 Description = "Resolve the issue with the login API endpoint.",
                 DueDate = new DateTime(2025, 1, 22),
                 IsCompleted = true,
-                UserId = 3 // Reference to User with Id = 3
+                UserId = 3 
             },
             new Tasks
             {
@@ -43,7 +43,7 @@ public class TasksConfiguration : IEntityTypeConfiguration<Tasks>
                 Description = "Modify the database schema for the new feature.",
                 DueDate = new DateTime(2025, 2, 5),
                 IsCompleted = false,
-                UserId = 4 // Reference to User with Id = 4
+                UserId = 3 
             },
             new Tasks
             {
@@ -52,7 +52,7 @@ public class TasksConfiguration : IEntityTypeConfiguration<Tasks>
                 Description = "Refactor the codebase to improve performance and readability.",
                 DueDate = new DateTime(2025, 2, 10),
                 IsCompleted = false,
-                UserId = 5 // Reference to User with Id = 5
+                UserId = 2 
             },
             new Tasks
             {
@@ -61,7 +61,7 @@ public class TasksConfiguration : IEntityTypeConfiguration<Tasks>
                 Description = "Review the code submitted by the team for the latest feature.",
                 DueDate = new DateTime(2025, 1, 23),
                 IsCompleted = true,
-                UserId = 6 // Reference to User with Id = 6
+                UserId = 2 
             },
             new Tasks
             {
@@ -70,7 +70,7 @@ public class TasksConfiguration : IEntityTypeConfiguration<Tasks>
                 Description = "Write unit tests for the new user profile feature.",
                 DueDate = new DateTime(2025, 2, 1),
                 IsCompleted = false,
-                UserId = 7 // Reference to User with Id = 7
+                UserId = 1 
             },
             new Tasks
             {
@@ -79,7 +79,7 @@ public class TasksConfiguration : IEntityTypeConfiguration<Tasks>
                 Description = "Deploy the application to the staging environment.",
                 DueDate = new DateTime(2025, 1, 28),
                 IsCompleted = false,
-                UserId = 8 // Reference to User with Id = 8
+                UserId = 1 
             },
             new Tasks
             {
@@ -88,16 +88,7 @@ public class TasksConfiguration : IEntityTypeConfiguration<Tasks>
                 Description = "Backup all the relevant databases before the deployment.",
                 DueDate = new DateTime(2025, 2, 3),
                 IsCompleted = false,
-                UserId = 9 // Reference to User with Id = 9
-            },
-            new Tasks
-            {
-                Id = 10,
-                Title = "Plan Sprint",
-                Description = "Organize and plan the tasks for the upcoming sprint.",
-                DueDate = new DateTime(2025, 1, 21),
-                IsCompleted = true,
-                UserId = 10 // Reference to User with Id = 10
+                UserId = 1 
             }
         );
     }

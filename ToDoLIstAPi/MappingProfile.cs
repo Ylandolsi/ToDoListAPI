@@ -13,6 +13,7 @@ public class MappingProfile : Profile
         CreateMap<Tasks, TaskAddForUserDto>().ReverseMap();
         
         CreateMap<User, UserDtoOutput>().ReverseMap();
+        CreateMap<User, Userinput>().ReverseMap();
         CreateMap<User, UserDtoManipulation>().ReverseMap();
         
     }

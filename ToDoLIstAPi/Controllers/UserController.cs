@@ -1,7 +1,9 @@
 using Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Entities;
 using ToDoLIstAPi.DTO.Tasks;
+using ToDoLIstAPi.DTO.User;
 
 namespace ToDoLIstAPi.Controllers;
 
@@ -14,6 +16,7 @@ public class UserController: ControllerBase
     {
         _userService = userService;
     }
+    [Authorize(Roles = "Admin")]
     [HttpGet("collection")]
     public async Task<IActionResult> GetUsers()
     {
@@ -33,7 +36,8 @@ public class UserController: ControllerBase
         return Ok(user);
     }
     [HttpPost]
-    public async Task<IActionResult> CreateUser([FromBody] User user)
+    
+    public async Task<IActionResult> CreateUser([FromBody] Userinput user)
     {
         if (user == null)
         {
@@ -46,10 +50,10 @@ public class UserController: ControllerBase
         await _userService.CreateUserAsync(user);
         return Ok();
     }
-    [HttpPut]
-    public async Task<IActionResult> UpdateUser([FromBody] User user)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateUser(int id , [FromBody] Userinput user)
     {
-        if (user == null)
+        if (id <= 0 || user == null)
         {
             return BadRequest("User object is null");
         }
@@ -57,16 +61,18 @@ public class UserController: ControllerBase
         {
             return UnprocessableEntity(ModelState);
         }
-        await _userService.UpdateUserAsync(user);
+        await _userService.UpdateUserAsync(id , user);
         return Ok();
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
+    
     public async Task<IActionResult> DeleteUser(int id)
     {
         await _userService.DeleteUserAsync(id);
         return Ok();
     }
+    [Authorize(Roles = "Admin")]
     [HttpPost("{userId}/tasks")]
     public async Task<IActionResult> AddTaskToUser(int userId, [FromBody] TaskAddForUserDto task)
     {

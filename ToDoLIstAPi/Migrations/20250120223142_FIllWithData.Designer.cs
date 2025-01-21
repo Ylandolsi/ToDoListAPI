@@ -12,8 +12,8 @@ using ToDoLIstAPi.DbContext;
 namespace ToDoLIstAPi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250120150558_Initial")]
-    partial class Initial
+    [Migration("20250120223142_FIllWithData")]
+    partial class FIllWithData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,7 +91,7 @@ namespace ToDoLIstAPi.Migrations
                             DueDate = new DateTime(2025, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsCompleted = false,
                             Title = "Update Database Schema",
-                            UserId = 4
+                            UserId = 3
                         },
                         new
                         {
@@ -100,7 +100,7 @@ namespace ToDoLIstAPi.Migrations
                             DueDate = new DateTime(2025, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsCompleted = false,
                             Title = "Refactor Code",
-                            UserId = 5
+                            UserId = 2
                         },
                         new
                         {
@@ -109,7 +109,7 @@ namespace ToDoLIstAPi.Migrations
                             DueDate = new DateTime(2025, 1, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsCompleted = true,
                             Title = "Conduct Code Review",
-                            UserId = 6
+                            UserId = 2
                         },
                         new
                         {
@@ -118,7 +118,7 @@ namespace ToDoLIstAPi.Migrations
                             DueDate = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsCompleted = false,
                             Title = "Write Unit Tests",
-                            UserId = 7
+                            UserId = 1
                         },
                         new
                         {
@@ -127,7 +127,7 @@ namespace ToDoLIstAPi.Migrations
                             DueDate = new DateTime(2025, 1, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsCompleted = false,
                             Title = "Deploy Application",
-                            UserId = 8
+                            UserId = 1
                         },
                         new
                         {
@@ -136,16 +136,7 @@ namespace ToDoLIstAPi.Migrations
                             DueDate = new DateTime(2025, 2, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsCompleted = false,
                             Title = "Create Database Backups",
-                            UserId = 9
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Description = "Organize and plan the tasks for the upcoming sprint.",
-                            DueDate = new DateTime(2025, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsCompleted = true,
-                            Title = "Plan Sprint",
-                            UserId = 10
+                            UserId = 1
                         });
                 });
 
@@ -162,6 +153,18 @@ namespace ToDoLIstAPi.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("position")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -175,67 +178,28 @@ namespace ToDoLIstAPi.Migrations
                         {
                             Id = 1,
                             Name = "Yassine",
+                            PasswordHash = "$2a$11$143FvUPdT95WWhJS3gP2JuDpj3zyezQC5Q8104ioM1YBKOH2UR3qi",
+                            Role = "Admin",
+                            Username = "yassine",
                             position = "Software Developer"
                         },
                         new
                         {
                             Id = 2,
                             Name = "Fatima",
+                            PasswordHash = "$2a$11$BN6yt1TSvhtJUyrA3ezN6OhJIS7O3pTv3H0TVxTtglyURJBCjI3z2",
+                            Role = "Admin",
+                            Username = "fatima",
                             position = "Project Manager"
                         },
                         new
                         {
                             Id = 3,
                             Name = "Ahmed",
+                            PasswordHash = "$2a$11$UiFQw1BdHwK1C13FyCc4G.ZzZZEToQbWOr12CGkyonsL11DTwnE8S",
+                            Role = "employee",
+                            Username = "ahmed",
                             position = "Data Scientist"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Sara",
-                            position = "UI/UX Designer"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Ali",
-                            position = "DevOps Engineer"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Noor",
-                            position = "QA Engineer"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Hassan",
-                            position = "Mobile Developer"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Mounia",
-                            position = "Business Analyst"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Ibrahim",
-                            position = "Backend Developer"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Amina",
-                            position = "Frontend Developer"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Khalid",
-                            position = "Database Administrator"
                         });
                 });
 

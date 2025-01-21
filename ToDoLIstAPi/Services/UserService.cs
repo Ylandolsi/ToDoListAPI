@@ -22,18 +22,28 @@ public class UserService : IUserService
         _logger = logger;
         _mapper = mapper;
     }
-    public async Task CreateUserAsync(User user)
+    public async Task CreateUserAsync(Userinput user)
     {
         _logger.LogInformation("Creating user");
-        await _context.Set<User>().AddAsync(user);
+        var usser = _mapper.Map<User>(user);
+        _logger.LogInformation("Hashing password");
+        usser.PasswordHash = UserValidate.HashPassword(user.Password);
+        
+        await _context.Set<User>().AddAsync(usser);
         await _context.SaveChangesAsync();
         _logger.LogInformation("User created with Success");
     }
 
-    public async Task UpdateUserAsync(User user)
+    public async Task UpdateUserAsync(int id , Userinput user)
     {
         _logger.LogInformation("Updating user");
-        _context.Set<User>().Update(user);
+        _logger.LogInformation("Mapping user");
+        var usser = _mapper.Map<User>(user);
+        _logger.LogInformation("Hashing password");
+        usser.PasswordHash = UserValidate.HashPassword(user.Password);
+        usser.Id = id; 
+        _context.Set<User>().Update(usser);
+        
         await _context.SaveChangesAsync();
         _logger.LogInformation("Update with Success");
     }

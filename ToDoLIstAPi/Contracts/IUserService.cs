@@ -6,8 +6,8 @@ namespace Contracts;
 
 public interface IUserService
 {
-    Task CreateUserAsync(User user);
-    Task UpdateUserAsync(User user);
+    Task CreateUserAsync(Userinput user);
+    Task UpdateUserAsync(int id , Userinput user);
     Task DeleteUserAsync(int id);
     Task<UserDtoOutput> GetUserAsync(int id);
     Task<IEnumerable<UserDtoOutput>> GetAllUsersAsync();
